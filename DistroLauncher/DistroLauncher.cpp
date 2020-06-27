@@ -35,7 +35,40 @@ HRESULT InstallDistribution(bool createUser)
     if (FAILED(hr)) {
         return hr;
     }
+    // gen locale
+    hr = g_wslApi.WslLaunchInteractive(L"/usr/bin/locale-gen", true, &exitCode);
+    if (FAILED(hr)) {
+        return hr;
+    }
+    //initialize pacman key
+    hr = g_wslApi.WslLaunchInteractive(L"/usr/bin/pacman-key --init", true, &exitCode);
+    if (FAILED(hr)) {
+        return hr;
+    }
+    //initialize archlinux key
+    hr = g_wslApi.WslLaunchInteractive(L"/usr/bin/pacman-key --populate archlinux", true, &exitCode);
+    if (FAILED(hr)) {
+        return hr;
+    }
+    //initialize alterlinux key
+    hr = g_wslApi.WslLaunchInteractive(L"/usr/bin/pacman-key --populate alterlinux", true, &exitCode);
+    if (FAILED(hr)) {
+        return hr;
+    }
 
+
+    hr = g_wslApi.WslLaunchInteractive(L"/usr/bin/pacman -U /adduser-deb-3.113+nmu3-1-any.pkg.tar.xz --noconfirm", true, &exitCode);
+    if (FAILED(hr)) {
+        return hr;
+    }
+    //System Upgrading...
+    Helpers::PrintMessage(MSG_PACMAN_UPGRADING);
+
+    hr = g_wslApi.WslLaunchInteractive(L"/usr/bin/pacman -Syu --noconfirm", true, &exitCode);
+    if (FAILED(hr)) {
+        return hr;
+    }
+    system("cls");
     // Create a user account.
     if (createUser) {
         Helpers::PrintMessage(MSG_CREATE_USER_PROMPT);
