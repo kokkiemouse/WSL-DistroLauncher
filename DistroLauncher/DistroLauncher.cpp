@@ -55,12 +55,6 @@ HRESULT InstallDistribution(bool createUser)
     if (FAILED(hr)) {
         return hr;
     }
-
-
-    hr = g_wslApi.WslLaunchInteractive(L"/usr/bin/pacman -U /adduser-deb-3.113+nmu3-1-any.pkg.tar.xz --noconfirm", true, &exitCode);
-    if (FAILED(hr)) {
-        return hr;
-    }
     //System Upgrading...
     Helpers::PrintMessage(MSG_PACMAN_UPGRADING);
 
