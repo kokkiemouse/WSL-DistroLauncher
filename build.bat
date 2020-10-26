@@ -45,7 +45,7 @@ if %MSBUILD%==() (
 ) 
 :FOUND_MSBUILD
 set _MSBUILD_TARGET=Build
-set _MSBUILD_CONFIG=Debug
+set _MSBUILD_CONFIG=Release
 
 :ARGS_LOOP
 if (%1) == () goto :POST_ARGS_LOOP
